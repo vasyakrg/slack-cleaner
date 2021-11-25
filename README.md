@@ -30,15 +30,18 @@ You can grant these permissions to the app by:
 - review the permissions and press 'Authorize'
 - copy the 'OAuth Access Token' shown, and use this token as the --token argument to the script
 
-### Token: xoxp-10862131111-XXX
+### Token: xoxp-XXX
 
 ## Run:
 
-Clean all message from bot before 24 hours
+Clean all message from bot before 2 days ago
 
 ```
-docker run --rm --name slack_cleaner vasyakrg/slack-cleaner -c 'slack-cleaner --token xoxp-10862131111-XXX --message --bot --channel <channel-name> --before `TZ=GMT+24 date +%Y%d%m` --perform --as_user'
+docker run --rm --name slack_cleaner vasyakrg/slack-cleaner -c "slack-cleaner --token xoxp-XXX --message --bot --channel infra-alerts --before `date -d '2 days ago' +%Y%m%d` --perform --as_user"
 ```
+
+## Run with cron:
+0 22 * * * docker run --rm --name slack_cleaner vasyakrg/slack-cleaner -c "slack-cleaner --token xoxp-XXX --message --bot --channel infra-alerts --before `date -d '2 days ago' +%Y%m%d` --perform --as_user"
 
 ## Arguments
 ```
