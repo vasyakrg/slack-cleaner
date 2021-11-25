@@ -34,8 +34,10 @@ You can grant these permissions to the app by:
 
 ## Run:
 
+Clean all message from bot before 24 hours
+
 ```
-docker run --rm --name slack_cleaner vasyakrg/slack-cleaner -c 'slack-cleaner --token xoxp-10862131111-XXX --message --bot --channel <channel-name> --before YYYYMMDD --perform --as_user'
+docker run --rm --name slack_cleaner vasyakrg/slack-cleaner -c 'slack-cleaner --token xoxp-10862131111-XXX --message --bot --channel <channel-name> --before `TZ=GMT+24 date +%Y%d%m` --perform --as_user'
 ```
 
 ## Arguments
