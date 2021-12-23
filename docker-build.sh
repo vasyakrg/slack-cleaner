@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t vasyakrg/slack-cleaner .
-# && \ docker push vasyakrg/slack-cleaner
+docker build -t vasyakrg/slack-cleaner . \
+&& docker push vasyakrg/slack-cleaner

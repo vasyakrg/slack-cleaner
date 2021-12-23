@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-RUN apk add --update bash && rm -rf /var/cache/apk/*
+RUN apk add --update bash coreutils && rm -rf /var/cache/apk/*
 # for better layers
 RUN pip install slacker colorama
 
