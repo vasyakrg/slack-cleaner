@@ -7,12 +7,15 @@
 ```bash
 channels:read
 channels:write
-chat:write
+channels:history
 emoji:read
 files:read
 files:write
 links:read
 links:write
+chat:write (or both chat:write:user and chat:write:bot for older apps)
+users:read
+
 ```
 
 ## Configuring app
