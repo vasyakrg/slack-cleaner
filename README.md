@@ -131,6 +131,47 @@ slack-cleaner --token <TOKEN> --pattern "(bar|foo.+)"
 slack-cleaner --help
 ```
 
+## CronJob for k8s example
+
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: slack-cleaner-cronjob
+  namespace: cluster-maintenance
+spec:
+  schedule: 30 4 * * *
+  jobTemplate:
+    spec:
+      parallelism: 1
+      completions: 1
+      backoffLimit: 1
+      template:
+        spec:
+          containers:
+            - name: slack-cleaner-container
+              image: vasyakrg/slack-cleaner
+              command:
+                - /bin/bash
+                - '-c'
+                - >-
+                  slack-cleaner --token ${TOKEN} --message --bot --channel
+                  <you channel name> --before `date -d '1 day ago' +%Y%m%d` --perform
+                  --as_user
+              env:
+                - name: TOKEN
+                  value: >-
+                    xoxp-YOUTOKEN
+              terminationMessagePolicy: File
+              imagePullPolicy: IfNotPresent
+          restartPolicy: OnFailure
+          terminationGracePeriodSeconds: 30
+          schedulerName: default-scheduler
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+
+```
+
 ## Info
 
 - Fork [from](https://github.com/sgratzl/slack-cleaner) - Tnk!
